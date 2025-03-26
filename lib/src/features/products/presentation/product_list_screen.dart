@@ -50,10 +50,8 @@ class ProductListScreen extends ConsumerWidget {
                           child: CachedNetworkImage(
                             imageUrl: product.image,
                             fit: BoxFit.cover,
-                            placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
                           ),
                         ),
                         Padding(
@@ -70,10 +68,7 @@ class ProductListScreen extends ConsumerWidget {
                               SizedBox(height: 4),
                               Text(
                                 '\$${product.price.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -19,18 +18,14 @@ class LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     if (_formKey.currentState?.validate() ?? false) {
-      setState(() {
-        _isLoading = true;
-        _errorMessage = '';
-      });
+      setState(() => (_isLoading = true, _errorMessage = ''));
 
       try {
-        UserCredential userCredential = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
+        final userCredential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-
         // Navigate to product list screen on successful login
         context.go('/products');
       } on FirebaseAuthException catch (e) {
@@ -59,9 +54,7 @@ class LoginScreenState extends State<LoginScreen> {
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
+                  if (value == null || value.isEmpty) return 'Please enter your email';
                   if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                       .hasMatch(value)) {
                     return 'Please enter a valid email';
@@ -78,27 +71,18 @@ class LoginScreenState extends State<LoginScreen> {
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
+                  if (value == null || value.isEmpty) return 'Please enter your password';
+                  if (value.length < 6) 'Password must be at least 6 characters';
                   return null;
                 },
               ),
               SizedBox(height: 16),
               if (_errorMessage.isNotEmpty)
-                Text(
-                  _errorMessage,
-                  style: TextStyle(color: Colors.red),
-                ),
+                Text(_errorMessage, style: TextStyle(color: Colors.red)),
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: _isLoading ? null : _login,
-                child: _isLoading
-                    ? CircularProgressIndicator()
-                    : Text('Login'),
+                child: _isLoading ? CircularProgressIndicator() : Text('Login'),
               ),
               SizedBox(height: 16),
               TextButton(

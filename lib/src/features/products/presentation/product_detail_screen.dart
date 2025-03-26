@@ -29,10 +29,8 @@ class ProductDetailScreen extends ConsumerWidget {
                   height: 300,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) =>
-                      Icon(Icons.error),
+                  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
                 Positioned(
                   top: 16,
@@ -45,11 +43,8 @@ class ProductDetailScreen extends ConsumerWidget {
                       color: Colors.white,
                       size: 30,
                     ),
-                    onPressed: () {
-                      ref
-                          .read(favoriteProductsProvider.notifier)
-                          .toggleFavorite(product.id);
-                    },
+                    onPressed: ()=> ref.read(favoriteProductsProvider.notifier)
+                        .toggleFavorite(product.id),
                   ),
                 ),
               ],
@@ -61,10 +56,7 @@ class ProductDetailScreen extends ConsumerWidget {
                 children: [
                   Text(
                     product.title,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -78,10 +70,7 @@ class ProductDetailScreen extends ConsumerWidget {
                   SizedBox(height: 16),
                   Text(
                     'Description',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -91,10 +80,7 @@ class ProductDetailScreen extends ConsumerWidget {
                   SizedBox(height: 16),
                   Text(
                     'Category: ${product.category}',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontStyle: FontStyle.italic,
-                    ),
+                    style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
                   ),
                 ],
               ),
