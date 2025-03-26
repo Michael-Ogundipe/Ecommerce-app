@@ -54,7 +54,7 @@ This is an e-commerce mobile application built with Flutter, with a product list
 
 
 
-...........
+---------------------------------------------
 
 
 # Design Choices and Technical Challenges
@@ -63,77 +63,59 @@ This is an e-commerce mobile application built with Flutter, with a product list
 My goal was to create a clean, efficient, and user-friendly e-commerce mobile application that demonstrates modern Flutter development practices.
 
 ## 🏗 Architectural Decisions
-1. State Management: Riverpod
-   Why Riverpod?
 
-Provides a clean, declarative way to manage app state
-Offers excellent dependency injection
-Simplifies complex state scenarios
-Improves code readability and maintainability
+### 1. Navigation: Go Router
+#### Advantages:
 
-2. Navigation: Go Router
-   Advantages:
+- Declarative routing
+- Type-safe route definitions
+- Easy navigation between screens
+- Supports deep linking
 
-Declarative routing
-Type-safe route definitions
-Easy navigation between screens
-Supports deep linking
+### 2. Authentication: Firebase
+#### Reasons for Choice:
 
-3. Authentication: Firebase
-   Reasons for Choice:
+- Easy setup
+- Secure authentication
+- Built-in user management
+- Cross-platform support
 
-Easy setup
-Secure authentication
-Built-in user management
-Cross-platform support
+### 🧩 Swift Integration Challenges
+#### Device Information Retrieval
+#### Technical Approach:
 
-🧩 Swift Integration Challenges
-Device Information Retrieval
-Technical Approach:
+- Used Flutter's MethodChannel for native communication
+- Created a Swift plugin to fetch device details
+- Implemented a clean, cross-platform interface
 
-Used Flutter's MethodChannel for native communication
-Created a Swift plugin to fetch device details
-Implemented a clean, cross-platform interface
+#### Challenges Overcome:
 
-Challenges Overcome:
+1. Bridging Flutter and Native Code
 
-Bridging Flutter and Native Code
+- Managed method channel communication
+- Handled data serialization
 
-Managed method channel communication
-Handled data serialization
+2. Platform-Specific Information
+
+- Created a unified interface for device info
+- Ensured consistent data format across iOS and Android
 
 
-Platform-Specific Information
+#### Swift Method Channel
 
-Created a unified interface for device info
-Ensured consistent data format across iOS and Android
-
-
-
-Code Sample: Swift Method Channel
-swiftCopypublic func getDeviceInformation() -> [String: Any] {
-let device = UIDevice.current
-return [
-"model": device.model,
-"systemName": device.systemName,
-"systemVersion": device.systemVersion
-]
+```swift
+public func getDeviceInformation() -> [String: Any] {
+   let device = UIDevice.current
+   return [
+   "model": device.model,
+   "systemName": device.systemName,
+   "systemVersion": device.systemVersion
+   ]
 }
-🚧 Technical Challenges
-1. API Integration
+```
 
-Handled varied API response structures
-Implemented robust error handling
-Created flexible data models
-
-2. Performance Optimization
+3. Performance Optimization
 
 Used CachedNetworkImage for efficient image loading
-Implemented lazy loading in product lists
 Minimized unnecessary rebuilds with Riverpod
 
-3. User Experience Considerations
-
-Implemented loading states
-Created intuitive navigation
-Added error messages for user feedback
