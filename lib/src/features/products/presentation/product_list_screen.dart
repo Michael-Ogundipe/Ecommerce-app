@@ -101,7 +101,7 @@ class ProductListScreen extends ConsumerWidget {
         ),
         loading: () => Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(
-          child: Text('Error loading products: $error'),
+          child: Text('Error loading products'),
         ),
       ),
     );
