@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../services/device_info_service.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -13,7 +16,8 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   final _auth = FirebaseAuth.instance;
-  //final _deviceInfoService = DeviceInfoService();
+
+  final _deviceInfoService = DeviceInfoService();
   Map<String, dynamic> _deviceInfo = {};
 
   final _nameController = TextEditingController();
@@ -40,10 +44,10 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _fetchDeviceInfo() async {
-    // final deviceInfo = await _deviceInfoService.getDeviceInfo();
-    // setState(() {
-    //   _deviceInfo = deviceInfo;
-    // });
+    final deviceInfo = await _deviceInfoService.getDeviceInfo();
+    setState(() {
+      _deviceInfo = deviceInfo;
+    });
   }
 
   Future<void> _updateProfile() async {
@@ -51,7 +55,8 @@ class ProfileScreenState extends State<ProfileScreen> {
     if (user != null) {
       try {
         await user.updateDisplayName(_nameController.text);
-        if (_emailController.text.isNotEmpty && _emailController.text != user.email) {
+        if (_emailController.text.isNotEmpty &&
+            _emailController.text != user.email) {
           await user.verifyBeforeUpdateEmail(_emailController.text.trim());
         }
         if (_profilePictureUrl.isNotEmpty) {
@@ -73,10 +78,7 @@ class ProfileScreenState extends State<ProfileScreen> {
   Future<void> _pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      // Here, you should upload the image to Firebase Storage and get the URL
-      setState(() {
-        _profilePictureUrl = image.path; // Replace this with the uploaded URL
-      });
+      setState(() => _profilePictureUrl = image.path);
     }
   }
 
@@ -107,7 +109,9 @@ class ProfileScreenState extends State<ProfileScreen> {
               radius: 60,
               backgroundColor: Colors.blue.shade100,
               backgroundImage: _profilePictureUrl.isNotEmpty
-                  ? NetworkImage(_profilePictureUrl)
+                  ? _profilePictureUrl.contains('cache')
+                      ? FileImage(File(_profilePictureUrl))
+                      : NetworkImage(_profilePictureUrl)
                   : null,
               child: _profilePictureUrl.isEmpty
                   ? Icon(Icons.person, size: 80, color: Colors.blue)
@@ -139,6 +143,22 @@ class ProfileScreenState extends State<ProfileScreen> {
               onPressed: _updateProfile,
               child: Text('Update Profile'),
             ),
+            SizedBox(height: 20),
+            Text(
+              'Device Information',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            ..._deviceInfo.entries.map((entry) =>
+                ListTile(
+                  title: Text(entry.key),
+                  subtitle: Text(entry.value.toString()),
+                )
+            ).toList(),
+            SizedBox(height: 30),
           ],
         ),
       ),

@@ -19,7 +19,7 @@ class ProductListScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.person),
-            onPressed: () => context.go('/profile'),
+            onPressed: () => context.push('/profile'),
           ),
         ],
       ),

@@ -11,12 +11,6 @@ class ProductDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final productDetailProvider = FutureProvider<Product>((ref) {
-    //   final repository = ref.read(productRepositoryProvider);
-    //   return repository.fetchProductDetails(int.parse(productId));
-    // });
-    //
-    // final productAsync = ref.watch(productDetailProvider);
     final favoriteProducts = ref.watch(favoriteProductsProvider);
     final isFavorite = favoriteProducts.contains(product.id);
 
