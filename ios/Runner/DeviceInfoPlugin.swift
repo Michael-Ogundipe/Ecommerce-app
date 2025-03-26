@@ -7,7 +7,7 @@ public class DeviceInfoPlugin: NSObject, FlutterPlugin {
         let instance = DeviceInfoPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-
+    
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "getDeviceInfo":
@@ -17,10 +17,10 @@ public class DeviceInfoPlugin: NSObject, FlutterPlugin {
             result(FlutterMethodNotImplemented)
         }
     }
-
+    
     private func getDeviceInformation() -> [String: Any] {
         let device = UIDevice.current
-
+        
         return [
             "model": device.model,
             "systemName": device.systemName,
