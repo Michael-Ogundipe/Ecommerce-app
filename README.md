@@ -24,8 +24,8 @@ This is an e-commerce mobile application built with Flutter, with a product list
    2. Add an iOS and Android app to your Firebase project
    3. Download and place configuration files:
 
-      - android/app/google-services.json
-      - ios/Runner/GoogleService-Info.plist
+      - `android/app/google-services.json`
+      - `ios/Runner/GoogleService-Info.plist`
 
 3. Install Dependencies
    ```sh
@@ -57,10 +57,12 @@ This is an e-commerce mobile application built with Flutter, with a product list
 ...........
 
 
-Design Choices and Technical Challenges
-🤔 Design Philosophy
-Our goal was to create a clean, efficient, and user-friendly e-commerce mobile application that demonstrates modern Flutter development practices.
-🏗 Architectural Decisions
+# Design Choices and Technical Challenges
+
+## 🤔 Design Philosophy
+My goal was to create a clean, efficient, and user-friendly e-commerce mobile application that demonstrates modern Flutter development practices.
+
+## 🏗 Architectural Decisions
 1. State Management: Riverpod
    Why Riverpod?
 
