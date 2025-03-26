@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  ProfileScreenState createState() => ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class ProfileScreenState extends State<ProfileScreen> {
   final _auth = FirebaseAuth.instance;
   //final _deviceInfoService = DeviceInfoService();
   Map<String, dynamic> _deviceInfo = {};
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
+  String _profilePictureUrl = '';
+  final _picker = ImagePicker();
 
   @override
   void initState() {
@@ -29,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         _emailController.text = user.email ?? '';
         _nameController.text = user.displayName ?? '';
+        _profilePictureUrl = user.photoURL ?? '';
       });
     }
   }
@@ -45,14 +51,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (user != null) {
       try {
         await user.updateDisplayName(_nameController.text);
+        if (_emailController.text.isNotEmpty && _emailController.text != user.email) {
+          await user.verifyBeforeUpdateEmail(_emailController.text.trim());
+        }
+        if (_profilePictureUrl.isNotEmpty) {
+          await user.updatePhotoURL(_profilePictureUrl);
+        }
+        await user.reload();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Profile Updated Successfully')),
         );
+        setState(() {});
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to update profile: $e')),
         );
       }
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      // Here, you should upload the image to Firebase Storage and get the URL
+      setState(() {
+        _profilePictureUrl = image.path; // Replace this with the uploaded URL
+      });
     }
   }
 
@@ -63,6 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = _auth.currentUser;
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -81,11 +106,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             CircleAvatar(
               radius: 60,
               backgroundColor: Colors.blue.shade100,
-              child: Icon(
-                Icons.person,
-                size: 80,
-                color: Colors.blue,
-              ),
+              backgroundImage: _profilePictureUrl.isNotEmpty
+                  ? NetworkImage(_profilePictureUrl)
+                  : null,
+              child: _profilePictureUrl.isEmpty
+                  ? Icon(Icons.person, size: 80, color: Colors.blue)
+                  : null,
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: Text('Change Profile Picture'),
             ),
             SizedBox(height: 20),
             TextField(
@@ -98,7 +129,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: 16),
             TextField(
               controller: _emailController,
-              enabled: false,
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
@@ -109,21 +139,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: _updateProfile,
               child: Text('Update Profile'),
             ),
-            SizedBox(height: 20),
-            Text(
-              'Device Information',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            ..._deviceInfo.entries.map((entry) =>
-                ListTile(
-                  title: Text(entry.key),
-                  subtitle: Text(entry.value.toString()),
-                )
-            ).toList(),
           ],
         ),
       ),
