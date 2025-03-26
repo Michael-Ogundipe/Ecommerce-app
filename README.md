@@ -1,7 +1,7 @@
 # E-Commerce App
 
 ## 📱 Project Overview
-This is a full-featured e-commerce mobile application built with Flutter, offering product browsing, user authentication, and device information integration.
+This is an e-commerce mobile application built with Flutter, with a product listing screen, product details screen, user authentication, and device information integration.
 
 ## ✨ Features
 
@@ -20,35 +20,37 @@ This is a full-featured e-commerce mobile application built with Flutter, offeri
    ```
 2. Firebase Configuration
 
-Create a Firebase project at Firebase Console
-Add an iOS and Android app to your Firebase project
-Download and place configuration files:
+   1. Create a Firebase project at Firebase Console
+   2. Add an iOS and Android app to your Firebase project
+   3. Download and place configuration files:
 
-android/app/google-services.json
-ios/Runner/GoogleService-Info.plist
-
-
+      - android/app/google-services.json
+      - ios/Runner/GoogleService-Info.plist
 
 3. Install Dependencies
-   bashCopyflutter pub get
+   ```sh
+   flutter pub get
+   ```
 4. Run the App
-   bashCopy# For iOS
+   ```sh
+   # For iOS
    flutter run -d ios
 
-# For Android
-flutter run -d android
-🔧 Troubleshooting
+   # For Android
+   flutter run -d android
+   ```
+## 🔧 Troubleshooting
 
-Ensure Flutter SDK is updated
-Check Firebase configurations
-Verify all dependencies are installed
+- Ensure Flutter SDK is updated
+- Check Firebase configurations
+- Verify all dependencies are installed
 
-📦 Dependencies
+## 📦 Dependencies
 
-Flutter Riverpod
-Firebase Authentication
-Dio for API calls
-Go Router for navigation
+- Flutter Riverpod
+- Firebase Authentication
+- Dio for API calls
+- Go Router for navigation
 
 
 
