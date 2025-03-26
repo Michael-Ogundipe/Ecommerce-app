@@ -1,30 +1,23 @@
-# ecommerce_app
+# E-Commerce App
 
-
-Flutter E-Commerce App
-📱 Project Overview
+## 📱 Project Overview
 This is a full-featured e-commerce mobile application built with Flutter, offering product browsing, user authentication, and device information integration.
-✨ Features
 
-User Authentication (Login/Registration)
-Product Listing
-Product Details
-Favorites Management
-Profile Management
-Device Information Display
+## ✨ Features
 
-🛠 Prerequisites
-Before you begin, ensure you have:
+- User Authentication (Login/Registration)
+- Product Listing
+- Product Details
+- Favorites Management
+- Profile Management
+- Device Information Display
 
-Flutter SDK (3.10 or later)
-Android Studio or Xcode
-Firebase Account
-Git
-
-🚀 Setup Instructions
+## 🚀 Setup Instructions
 1. Clone the Repository
-   bashCopygit clone https://github.com/yourusername/flutter-ecommerce-app.git
+   ```sh
+   git clone https://github.com/yourusername/flutter-ecommerce-app.git
    cd flutter-ecommerce-app
+   ```
 2. Firebase Configuration
 
 Create a Firebase project at Firebase Console
