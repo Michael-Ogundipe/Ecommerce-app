@@ -116,6 +116,6 @@ public func getDeviceInformation() -> [String: Any] {
 
 3. Performance Optimization
 
-Used CachedNetworkImage for efficient image loading
-Minimized unnecessary rebuilds with Riverpod
+- Used CachedNetworkImage for efficient image loading
+- Minimized unnecessary rebuilds with Riverpod
 
